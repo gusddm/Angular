@@ -1,0 +1,5 @@
+[
+    {"id": 1, "description": "Cafetera", "price": 500, "stock": 15, "checkedTotal": 0},
+    {"id": 2, "description": "TV Led", "price": 3500,"stock": 5, "checkedTotal" : 0},
+    {"id": 3, "description": "Microondas", "price": 1400, "stock": 8, "checkedTotal" : 0}]
+

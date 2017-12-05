@@ -1,0 +1,26 @@
+<h1>Shopping Cart</h1>
+<h2><app-user></app-user></h2>
+<h3>We'll send you news to {{user.email}} </h3>
+
+<a routerLink="/items" routerLinkActive="active">Items List</a>
+
+<ul>
+    <li *ngFor="let item of items">
+        <a id="{{item.id}}" [appItemDetail]="'description'" [routerLink]="['/item', item.id]">{{item.description}}</a> 
+        ( Quedan {{item.stock}} unidad/es ) 
+        <button (click)="onCheckOutItem(item.id, quantity.value)" [disabled]="item.stock == 0">Buy</button> 
+        <input #quantity type="text" name="quantity" placeholder="1" value="" size="1" (keyup.enter)="onCheckOutItem(item.id, quantity.value)"/>        
+    </li>
+</ul>
+
+<div *ngIf="items && showCart()">
+    <h1>Your current Shopping Cart</h1>
+    <ul>
+        <ng-container *ngFor="let item of items">
+            <li *ngIf="item.checkedTotal > 0">
+                {{item.description}}            
+                <button (click)="onRemoveFromCart(item.id)">Delete</button>
+            </li>
+        </ng-container>
+    </ul>
+</div>
