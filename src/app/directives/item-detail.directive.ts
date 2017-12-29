@@ -19,7 +19,7 @@ export class ItemDetailDirective {
     const itemId = this.el.nativeElement.id;    
       this.catalogService
         .getItem(itemId)
-        .subscribe(item => { this.item = item; this.alertDetail(this.item.description) });    
+        .subscribe(item => { this.item = item; this.alertDetail(this.item.description); });    
   }
 
   @HostListener('mouseleave') onMouseLeave() {

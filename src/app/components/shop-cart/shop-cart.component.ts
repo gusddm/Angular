@@ -6,27 +6,33 @@ import { CatalogService } from '../../services/catalog.service';
 import { Item } from '../../interfaces/item';
 import 'rxjs/add/operator/map';
 import {Http} from '@angular/http';
+import { Subscription } from 'rxjs/Subscription';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-shop-cart',
   templateUrl: './shop-cart.component.html',
-  styleUrls: ['./shop-cart.component.css']
+  styleUrls: ['./shop-cart.component.css']  
 })
-export class ShopListComponent implements OnInit {
+export class ShopListComponent implements OnInit, OnDestroy {
 
   @ViewChild(UserComponent) child;
-  user : User;
-  items : Item[];
+  public user : User;
+  public items : Item[];
+  private items$ : Subscription;
     
   constructor(private catalogService: CatalogService, private route: ActivatedRoute) {
-    this.catalogService = catalogService;
+    //this.catalogService = catalogService;
+  }
+
+  ngOnDestroy() {
+    this.items$.unsubscribe();
   }
 
   ngOnInit() {
     this.user = this.child.user;
-    this.catalogService.getItems()
-                       .subscribe((items:Array<Item>) => { this.items = items; });;
-    }
+    this.items$ = this.catalogService.getItems().subscribe((items:Array<Item>) => this.items = items);
+  }
 
   getItem(id) {    
     return this.items.find(item => item.id == id);
